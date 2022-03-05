@@ -1,6 +1,5 @@
 "use strict";
 const prompt = require('prompt-sync')();
-const { balance } = require('./account');
 const atm = require('./atm');
 
 //As a developer, I want my index.js file to contain the user menu for interacting with the ATM.
@@ -8,19 +7,30 @@ const atm = require('./atm');
 //As a developer, I want to account for and handle bad user input, ensuring that any user input is validated and reobtained if necessary.
 
 //Allow customer to continue using the ATM until choosing to exit.
-console.log(`Welcome to Bank of Dev! Please enter your 4-digit PIN:`);
-const getPIN = prompt();
+console.log(`Welcome to Bank of Dev!`);
 
-let ckPin = atm.valPIN(getPIN);
-if (ckPin === true){
-    console.log(`Thanks!`);
-    chooseTrans();
-}
-else{
-    console.log(`Ooops! Try again!`);
+logIn();
+
+function logIn(){
+    console.log(`Please enter your 4-digit PIN:`);
+    const getPIN = prompt();
+
+    let ckPin = atm.valPIN(getPIN);
+    if (ckPin === true){
+        console.log(`Thanks!`);
+        chooseTrans();
+    }
+    else{
+        console.log(`Ooops! Try again! Enter 4 to exit.`);
+        let exit = prompt();
+        if(exit === '4'){
+            console.log(`Goodbye!`);
+        }else{
+        logIn();}
+    }
 }
 
-function chooseTrans(){
+function chooseTrans(){    
     console.log(`Which transaction would you like to do?
     For Balance Inquiry, enter 1
     For Deposit, enter 2
@@ -31,29 +41,22 @@ function chooseTrans(){
     switch(transType){
         case '1':
             atm.balance();
+            chooseTrans();
         break;
-        case '2':
-            console.log(`How much would you like to deposit?`);
-            let depositAmt = prompt();
-            atm.deposit(depositAmt);
+        case '2':            
+            atm.deposit();
+            chooseTrans();
         break;
-        case '3':
-            console.log(`How much would you like to withdraw?`);
-            let wdAmt = prompt();
-            if (wdAmt <= balance){
-                atm.withdraw(wdAmt);
-            }
-            else{
-                console.log(`You don't have sufficient balance for that withdrawal. Please enter an amount less than or equal to ${balance}.`);
-                let wdAmt = prompt();   
-                atm.withdraw(wdAmt);
-            }
+        case '3':           
+            atm.withdraw();            
+            chooseTrans();
         break;
         case '4':
-            console.log(`Thank you for banking with Bank of Dev! Goodbye!`)
+            console.log(`Thank you for banking with Bank of Dev! Goodbye!`);
+        break;
         default:
             console.log(`Invalid Entry`);
-            chooseTrans();
+            chooseTrans("no");
         break;
     }
 }

@@ -1,31 +1,30 @@
 "use strict";
 const prompt = require('prompt-sync')();
 const account = require('./account');
-const newTrans = require('./index');
-const currBalance = account.balance;
 //create functions getBalance, withdraw, deposit, validatePin
 
-function getBalance(findBalance){
-    console.log(`Current Balance = ${findBalance.toFixed(2)}
-    
-    Would you like another transaction? Enter Yes or No`);
-    let newTrans = prompt();
-    if(newTrans === "Yes"){
-        
-    }else{ console.log(`Thank you for banking with Bank of Dev! Goodbye!`)}
 
-
+function getBalance(){    
+    console.log(`Current Balance = ${account.balance}`);    
 };
 
 function withdraw(wdAmt){
-    let newBalance = Number(currBalance) - Number(wdAmt);
-    return getBalance(newBalance);
+    console.log(`How much would you like to withdraw?`);
+        wdAmt = parseInt(prompt());
+        if (wdAmt <= account.balance){
+            account.balance = account.balance - wdAmt;  
+            console.log(`New Balance = ${account.balance}`)
+        }
+        else{
+            console.log(`You don't have sufficient balance for that withdrawal. Please enter an amount less than or equal to ${account.balance}.`);
+            };    
 };
 
 function deposit(depAmt){
-    let newBalance = Number(account.balance) + Number(depAmt);
-    console.log(`New Balance = ${newBalance.toFixed(2)}`);
-    return getBalance(newBalance);    
+    console.log(`How much would you like to deposit?`);
+        depAmt = parseInt(prompt());
+        account.balance = account.balance + depAmt; 
+        console.log(`New Balance = ${account.balance}`)
 };
 
 function validatePin(tryPIN){
