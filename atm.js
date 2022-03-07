@@ -10,10 +10,10 @@ function getBalance(){
 
 function withdraw(wdAmt){
     console.log(`How much would you like to withdraw?`);
-        wdAmt = parseInt(prompt());
+        wdAmt = (prompt());
         if (wdAmt <= account.balance){
-            account.balance = account.balance - wdAmt;  
-            console.log(`New Balance = ${account.balance}`)
+            account.balance = account.balance - Number(wdAmt);  
+            console.log(`New Balance = ${account.balance.toFixed(2)}`)
         }
         else{
             console.log(`You don't have sufficient balance for that withdrawal. Please enter an amount less than or equal to ${account.balance}.`);
@@ -22,9 +22,9 @@ function withdraw(wdAmt){
 
 function deposit(depAmt){
     console.log(`How much would you like to deposit?`);
-        depAmt = parseInt(prompt());
-        account.balance = account.balance + depAmt; 
-        console.log(`New Balance = ${account.balance}`)
+        depAmt = (prompt());
+        account.balance = account.balance + Number(depAmt); 
+        console.log(`New Balance = ${account.balance.toFixed(2)}`);
 };
 
 function validatePin(tryPIN){
