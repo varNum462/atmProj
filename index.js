@@ -12,22 +12,21 @@ console.log(`Welcome to Bank of Dev!`);
 logIn();
 
 function logIn(){
-    console.log(`Please enter your 4-digit PIN:`);
-    const getPIN = prompt();
-
-    let ckPin = atm.valPIN(getPIN);
-    if (ckPin === true){
-        console.log(`Thanks!`);
-        chooseTrans();
-    }
-    else{
-        console.log(`Ooops! Try again! Enter 4 to exit.`);
-        let exit = prompt();
-        if(exit === '4'){
+    console.log(`Please enter your 4-digit PIN, or enter 4 to exit.`);
+    let getPin = prompt();
+        if(getPin === '4'){
             console.log(`Goodbye!`);
         }else{
-        logIn();}
-    }
+            let ckPin = atm.valPIN(getPin);
+            if (ckPin === true){
+            console.log(`Thanks!`);
+            chooseTrans();
+            }
+            else{
+            console.log(`Ooops! Try again!`);        
+            logIn();
+            }
+        }
 }
 
 function chooseTrans(){    
@@ -52,7 +51,10 @@ function chooseTrans(){
             chooseTrans();
         break;
         case '4':
-            console.log(`Thank you for banking with Bank of Dev! Goodbye!`);
+            console.log(`
+        Thank you for banking with Bank of Dev! Goodbye!
+            
+            `);
         break;
         default:
             console.log(`Invalid Entry`);
